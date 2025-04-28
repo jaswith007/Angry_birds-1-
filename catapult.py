@@ -19,11 +19,11 @@ def place(screen , catapult1: Catapult, catapult2: Catapult):
     pygame.display.set_caption("Angry Birds - 2 Player")
     pygame.display.set_icon(pygame.image.load("images/icon.png"))
     background = pygame.image.load("images/background.png")
-    background = pygame.transform.scale(background, (1280, 720)) # Changes the size of the image to 800x500
+    background = pygame.transform.scale(background, (1280, 720))
 
     running = True
     while running:
-        screen.blit(background, (0, 0)) # Position of the top left corner of the background image
+        screen.blit(background, (0, 0))
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
