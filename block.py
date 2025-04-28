@@ -21,3 +21,4 @@ class Block:
             self.image = wood1
         if self.type == 3:
             self.image = stone1
+        self.rect = self.image.get_rect(topleft = (self.x, self.y))

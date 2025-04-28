@@ -12,7 +12,7 @@ class Bird:
         self.y = y
         self.radius = radius
         self.type = type
-        self.gravity = 1000
+        self.gravity = 700
         self.velocityX = 0
         self.velocityY = 0
         if self.type == "red":
