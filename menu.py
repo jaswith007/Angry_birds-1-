@@ -1,7 +1,7 @@
 import pygame
 import sys
 
-def menu_screen(screen):
+def menu_screen(screen, game_state):
     pygame.init()
     clock = pygame.time.Clock()
     font = pygame.font.Font("sf-cartoonist-hand.italic.ttf", 35)
@@ -65,7 +65,7 @@ def menu_screen(screen):
                 # Start game when Enter is pressed and both players entered names
                 if event.key == pygame.K_RETURN and text1.strip() and text2.strip():
                     print("Starting a game between", text1, "and", text2)
-                    return
+                    return  "game"
                 
         screen.blit(player1, player1_box) # Writes the player1 and draws the player1_box
         screen.blit(player2, player2_box)
@@ -79,4 +79,4 @@ def menu_screen(screen):
         
         pygame.display.flip()
         clock.tick(60)
-    pygame.quit()
+    return "game"
