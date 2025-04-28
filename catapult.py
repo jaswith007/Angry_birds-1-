@@ -8,7 +8,6 @@ class Catapult:
 
 def catapult_place(screen , catapult1: Catapult, catapult2: Catapult):
     pygame.init()
-    clock = pygame.time.Clock()
 
     pygame.display.set_caption("Angry Birds - 2 Player")
     pygame.display.set_icon(pygame.image.load("images/icon.png"))
@@ -23,5 +22,3 @@ def catapult_place(screen , catapult1: Catapult, catapult2: Catapult):
     
     screen.blit(catapult1.image, (catapult1.x, catapult1.y))
     screen.blit(catapult2.image, (catapult2.x, catapult2.y))
-    
-    clock.tick(60)
