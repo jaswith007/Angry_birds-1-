@@ -1,4 +1,4 @@
-import pygame
+import pygame # type: ignore
 
 class Catapult:
     def __init__(self, x, y, image):

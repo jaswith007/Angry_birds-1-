@@ -1,15 +1,13 @@
-import pygame
+import pygame # type: ignore
 import sys
 
-def menu_screen(screen, game_state):
+def menu_screen(screen, background):
     pygame.init()
     clock = pygame.time.Clock()
     font = pygame.font.Font("sf-cartoonist-hand.italic.ttf", 35)
 
     pygame.display.set_caption("Angry Birds - 2 Player")
     pygame.display.set_icon(pygame.image.load("images/icon.png"))
-    background = pygame.image.load("images/background.png")
-    background = pygame.transform.scale(background, (800, 500)) # Changes the size of the image to 800x500
 
     player1 = font.render("Player 1:", True, (0, 0, 0)) # True makes the text non-pixelated and (0,0,0) for the black color
     player2 = font.render("Player 2:", True, (0, 0, 0))
@@ -26,7 +24,7 @@ def menu_screen(screen, game_state):
 
     running = True
     while running:
-        screen.blit(background, (250, 120)) # Position of the top left corner of the background image
+        screen.blit(background, (0,0)) # Position of the top left corner of the background image
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
