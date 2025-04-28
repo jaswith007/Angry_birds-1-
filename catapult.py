@@ -25,4 +25,3 @@ def catapult_place(screen , catapult1: Catapult, catapult2: Catapult):
     screen.blit(catapult2.image, (catapult2.x, catapult2.y))
     
     clock.tick(60)
-    pygame.quit()
