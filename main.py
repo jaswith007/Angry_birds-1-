@@ -66,7 +66,7 @@ player_2 = ""
 turn = random.choice(["player1","player2"])
 game_over = False
 
-def calculate_trajectory(x, y, velocityX, velocityY, gravity, steps=150, dT=0.016):
+def calculate_trajectory(x, y, velocityX, velocityY, gravity, steps=150, dT=clock.tick(120)/1000):
     points = []
     for i in range(steps):
         t = i * dT
@@ -314,7 +314,7 @@ while running:
 
             traj_points = calculate_trajectory(catapult_center[0], catapult_center[1], velocityX, velocityY, top_bird_1.gravity)
             for point in traj_points:
-                pygame.draw.circle(screen, (255, 255, 255), (int(point[0]), int(point[1])), 3)
+                pygame.draw.circle(screen, (0, 0, 0), (int(point[0]), int(point[1])), 3)
         # For player 1
         if dragging_2 and top_bird_2:
             catapult_center = (0.76*x_length, 515)
@@ -325,6 +325,6 @@ while running:
 
             traj_points = calculate_trajectory(catapult_center[0], catapult_center[1], velocityX, velocityY, top_bird_2.gravity)
             for point in traj_points:
-                pygame.draw.circle(screen, (255, 255, 255), (int(point[0]), int(point[1])), 3)
+                pygame.draw.circle(screen, (0, 0, 0), (int(point[0]), int(point[1])), 3)
 
         pygame.display.flip()
