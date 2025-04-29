@@ -41,6 +41,8 @@ fortress_right = fortress.Fortress(x_length - (fortress_x_size+2)*35, 615, fortr
 top_bird_1 = None
 top_bird_2 = None
 
+MAX_drag = 100
+
 pygame.init()
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((x_length, y_length))
@@ -184,12 +186,25 @@ while running:
                 
 
             if event.type == pygame.MOUSEMOTION:
+                catapult_center = (0.26*x_length, 515) if top_bird_1 else (0.76*x_length, 515)
+                magnitude = ((event.pos[0] - catapult_center[0])**2 + (event.pos[1] - catapult_center[1])**2)**0.5
+                normalized_x = (event.pos[0] - catapult_center[0]) / magnitude
+                normalized_y = (event.pos[1] - catapult_center[1]) / magnitude
+
                 if dragging_1:
-                    top_bird_1.rect.center = event.pos
-                    top_bird_1.x, top_bird_1.y = top_bird_1.rect.topleft
+                    if magnitude <= MAX_drag and not event.pos == (0, 0) :
+                        top_bird_1.rect.center = event.pos
+                        top_bird_1.x, top_bird_1.y = top_bird_1.rect.topleft
+                    else:
+                        top_bird_1.rect.center = (catapult_center[0] + normalized_x*MAX_drag, catapult_center[1] + normalized_y*MAX_drag)
+                        top_bird_1.x, top_bird_1.y = top_bird_1.rect.topleft
                 if dragging_2:
-                    top_bird_2.rect.center = event.pos
-                    top_bird_2.x, top_bird_2.y = top_bird_2.rect.topleft
+                    if magnitude <= MAX_drag and not event.pos == (0, 0):
+                        top_bird_2.rect.center = event.pos
+                        top_bird_2.x, top_bird_2.y = top_bird_2.rect.topleft
+                    else:
+                        top_bird_1.rect.center = (catapult_center[0] + normalized_x*MAX_drag, catapult_center[1] + normalized_y*MAX_drag)
+                        top_bird_2.x, top_bird_2.y = top_bird_2.rect.topleft
 
         if top_bird_1 and released_1:
             top_bird_1.velocityY += top_bird_1.gravity * dt  # Gravity affects vertical speed

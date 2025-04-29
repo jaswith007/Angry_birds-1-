@@ -45,34 +45,54 @@ class Bird:
             if player == 1:
                 self.x = 0.26*1280
                 self.y = 515
+                self.rect.x = 0.26*1280
+                self.rect.y = 515
             elif player == 2:
                 self.x = 0.76*1280
                 self.y = 515
+                self.rect.x = 0.76*1280
+                self.rect.y = 515
 
     def revert(self, player):
         if player == 1:
             if self.type == "red":
                 self.x = 0.27*x_length
                 self.y = 590
+                self.rect.x = 0.27*x_length
+                self.rect.y = 590
             elif self.type == "blue":
                 self.x = 0.3*x_length
                 self.y = 590
+                self.rect.x = 0.3*x_length
+                self.rect.y = 590
             elif self.type == "yellow":
                 self.x = 0.33*x_length
                 self.y = 590
+                self.rect.x = 0.33*x_length
+                self.rect.y = 590
             elif self.type == "black":
                 self.x = 0.36*x_length
                 self.y = 590
+                self.rect.x = 0.36*x_length
+                self.rect.y = 590
         elif player == 2:
             if self.type == "red":
                 self.x = 0.76*x_length
                 self.y = 590
+                self.rect.x = 0.76*x_length
+                self.rect.y = 590
             elif self.type == "blue":
                 self.x = 0.73*x_length
                 self.y = 590
+                self.rect.x = 0.73*x_length
+                self.rect.y = 590
             elif self.type == "yellow":
                 self.x = 0.70*x_length
                 self.y = 590
+                self.rect.x = 0.70*x_length
+                self.rect.y = 590
             elif self.type == "black":
                 self.x = 0.67*x_length
                 self.y = 590
+                self.rect.x = 0.67*x_length
+                self.rect.y = 590
