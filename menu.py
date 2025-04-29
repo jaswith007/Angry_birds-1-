@@ -1,4 +1,4 @@
-import pygame # type: ignore
+import pygame
 import sys
 
 def menu_screen(screen, background):
@@ -20,6 +20,8 @@ def menu_screen(screen, background):
     Green = pygame.Color('darkgreen')
     Blue = pygame.Color('blue')
     color1 = color2 = Green
+    global text1
+    global text2
     text1 = text2 = ""
 
     running = True
@@ -59,13 +61,12 @@ def menu_screen(screen, background):
                         text2 = text2[:-1]
                     else:
                         text2 += event.unicode
-
                 # Start game when Enter is pressed and both players entered names
                 if event.key == pygame.K_RETURN and text1.strip() and text2.strip():
                     print("Starting a game between", text1, "and", text2)
                     return  "game"
-                
-        screen.blit(player1, player1_box) # Writes the player1 and draws the player1_box
+                        
+        screen.blit(player1, player1_box) # Writes player1 and draws the player1_box
         screen.blit(player2, player2_box)
         pygame.draw.rect(screen, color1, input1, 3, border_radius=10)
         pygame.draw.rect(screen, color2, input2, 3, border_radius=10)

@@ -3,9 +3,14 @@ import menu
 import catapult
 import bird
 import fortress
+import random
+import sys
+
 
 x_length = 1280
 y_length = 720
+
+font = pygame.font.Font("sf-cartoonist-hand.italic.ttf", 35)
 
 k = 8
 
@@ -32,8 +37,8 @@ wood2 = pygame.transform.scale(pygame.image.load("images/wooden_block2.png"), (3
 stone1 = pygame.transform.scale(pygame.image.load("images/stone_block1.png"), (35, 35))
 stone2 = pygame.transform.scale(pygame.image.load("images/stone_block2.png"), (35, 35))
 
-fortress_x_size = 10
-fortress_y_size = 5
+fortress_x_size = 1
+fortress_y_size = 1
 
 fortress_left = fortress.Fortress(100, 615, fortress_x_size, fortress_y_size)
 fortress_right = fortress.Fortress(x_length - (fortress_x_size+2)*35, 615, fortress_x_size, fortress_y_size)
@@ -51,12 +56,25 @@ background = pygame.image.load("images/background.png")
 background = pygame.transform.scale(background, (x_length, y_length)) 
 
 running = True
-game_state = "game"
+game_state = "menu"
 dragging_1 = False
 released_1 = False
 dragging_2 = False
 released_2 = False
-turn = "player1"
+player_1 = ""
+player_2 = ""
+turn = random.choice(["player1","player2"])
+game_over = False
+
+def calculate_trajectory(x, y, velocityX, velocityY, gravity, steps=150, dT=0.016):
+    points = []
+    for i in range(steps):
+        t = i * dT
+        new_x = x + velocityX * t
+        new_y = y + velocityY * t + 0.5 * gravity * t**2
+        points.append((new_x, new_y))
+    return points
+
 while running:
     dt = clock.tick(120)/1000
     events = pygame.event.get()
@@ -66,10 +84,28 @@ while running:
 
     if game_state == "menu":
         game_state = menu.menu_screen(screen, background)
+        player_1 = menu.text1
+        player_2 = menu.text2
+
+        # After leaving menu, show who starts
+        screen.fill((255, 255, 255))
+        screen.blit(background, (0, 0))
+        start_msg = f"{player_1 if turn == 'player1' else player_2} starts the match!"
+        start_text = font.render(start_msg, True, (0, 0, 0))
+        start_rect = start_text.get_rect(center=(x_length // 2, y_length // 2))
+        screen.blit(start_text, start_rect)
+        pygame.display.flip()
+        pygame.time.wait(3000)  # Show for 3 seconds
 
     if game_state == "game":
         screen.fill((255, 255, 255)) 
         screen.blit(background, (0, 0))
+        player1 = font.render(player_1, True, (0, 0, 0)) 
+        player2 = font.render(player_2, True, (0, 0, 0))
+        player1_rect = player1.get_rect(topleft = (10, 10))
+        player2_rect = player2.get_rect(topright = (1270, 10))
+        screen.blit(player1, player1_rect)
+        screen.blit(player2, player2_rect)
 
         fortress_left.fortress_place(screen)
         fortress_right.fortress_place(screen)
@@ -185,8 +221,6 @@ while running:
                     top_bird_2.velocityY = -k*(event.pos[1] - 515)
                     turn = "player1"
 
-                
-
             if event.type == pygame.MOUSEMOTION:
                 catapult_center = (0.26*x_length, 515) if top_bird_1 else (0.76*x_length, 515)
                 magnitude = ((event.pos[0] - catapult_center[0])**2 + (event.pos[1] - catapult_center[1])**2)**0.5
@@ -223,6 +257,9 @@ while running:
 
         for block in fortress_right.blocks: 
             if top_bird_1 and top_bird_1.rect.colliderect(block.rect):
+                block.damage(top_bird_1)
+                if block.hp <= 0:
+                    fortress_right.blocks.remove(block)
                 dx_1 = (top_bird_1.rect.centerx - block.rect.centerx)
                 dy_1 = (top_bird_1.rect.centery - block.rect.centery)
 
@@ -230,9 +267,24 @@ while running:
                     top_bird_1.velocityX *= -1
                 else:                  # Vertical collision
                     top_bird_1.velocityY *= -1
+                if fortress_right.blocks == [] and not game_over:
+                    win = player_1 + " won the game!"
+                    winner_message = font.render(win, True, (0, 0, 0))
+                    win_rect = winner_message.get_rect(center=(640, 200))
+                    screen.blit(winner_message, win_rect)
+                    pygame.display.flip()
+                    print(f"{player_1} won the game")
+                    game_over = True
+                    pygame.time.wait(3000)
+                    pygame.quit()
+                    sys.exit()
+
            
         for block in fortress_left.blocks:
             if top_bird_2 and top_bird_2.rect.colliderect(block.rect):
+                block.damage(top_bird_2)
+                if block.hp <= 0:
+                    fortress_left.blocks.remove(block)
                 dx_2 = (top_bird_2.rect.centerx - block.rect.centerx)
                 dy_2 = (top_bird_2.rect.centery - block.rect.centery)
 
@@ -240,5 +292,39 @@ while running:
                     top_bird_2.velocityX *= -1
                 else:                  # Vertical collision
                     top_bird_2.velocityY *= -1
-            
+                if fortress_left.blocks == [] and not game_over:
+                    win = player_2 + " won the game!"
+                    winner_message = font.render(win, True, (0, 0, 0))
+                    win_rect = winner_message.get_rect(center=(640, 200))
+                    screen.blit(winner_message, win_rect)
+                    pygame.display.flip()
+                    print(f"{player_2} won the game")
+                    game_over = True
+                    pygame.time.wait(3000)
+                    pygame.quit()
+                    sys.exit()
+
+        # For player 1
+        if dragging_1 and top_bird_1:
+            catapult_center = (0.26*x_length, 515)
+            dx = top_bird_1.rect.centerx - catapult_center[0]
+            dy = top_bird_1.rect.centery - catapult_center[1]
+            velocityX = -k * dx
+            velocityY = -k * dy
+
+            traj_points = calculate_trajectory(catapult_center[0], catapult_center[1], velocityX, velocityY, top_bird_1.gravity)
+            for point in traj_points:
+                pygame.draw.circle(screen, (255, 255, 255), (int(point[0]), int(point[1])), 3)
+        # For player 1
+        if dragging_2 and top_bird_2:
+            catapult_center = (0.76*x_length, 515)
+            dx = top_bird_2.rect.centerx - catapult_center[0]
+            dy = top_bird_2.rect.centery - catapult_center[1]
+            velocityX = -k * dx
+            velocityY = -k * dy
+
+            traj_points = calculate_trajectory(catapult_center[0], catapult_center[1], velocityX, velocityY, top_bird_2.gravity)
+            for point in traj_points:
+                pygame.draw.circle(screen, (255, 255, 255), (int(point[0]), int(point[1])), 3)
+
         pygame.display.flip()

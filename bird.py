@@ -5,6 +5,11 @@ import random
 x_length = 1280
 y_length = 720
 
+red_bird = pygame.image.load("images/red_bird.png")
+blue_bird = pygame.image.load("images/blue_bird.png")
+yellow_bird = pygame.image.load("images/yellow_bird.png")
+black_bird = pygame.image.load("images/black_bird.png")
+
 pygame.init()
 class Bird:
     def __init__(self, x, y, radius, type):
@@ -16,13 +21,13 @@ class Bird:
         self.velocityX = 0
         self.velocityY = 0
         if self.type == "red":
-            self.image = pygame.image.load("images/red_bird.png")
+            self.image = red_bird
         elif self.type == "blue":
-            self.image = pygame.image.load("images/blue_bird.png")
+            self.image = blue_bird
         elif self.type == "yellow":
-            self.image = pygame.image.load("images/yellow_bird.png")
+            self.image = yellow_bird
         elif self.type == "black":
-            self.image = pygame.image.load("images/black_bird.png") 
+            self.image = black_bird 
         self.image = pygame.transform.scale(self.image, (self.radius*2, self.radius*2))
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
 
