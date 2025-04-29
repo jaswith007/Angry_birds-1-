@@ -56,6 +56,7 @@ dragging_1 = False
 released_1 = False
 dragging_2 = False
 released_2 = False
+turn = "player1"
 while running:
     dt = clock.tick(120)/1000
     events = pygame.event.get()
@@ -84,105 +85,106 @@ while running:
         bird4_2.bird_place(2, screen)
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if bird1_1.is_clicked():
-                    top_bird_1 = bird1_1
-                    top_bird_2 = None
-                    bird1_1.update(1)
-                    bird1_1.rect.x = 0.26*1280
-                    bird1_1.rect.y = 515
-                    bird2_1.revert(1)
-                    bird3_1.revert(1)
-                    bird4_1.revert(1)
-                    released_1 = False
-                elif bird2_1.is_clicked():
-                    top_bird_1 = bird2_1
-                    top_bird_2 = None
-                    bird2_1.update(1)
-                    bird2_1.rect.x = 0.26*1280
-                    bird2_1.rect.y = 515
-                    bird1_1.revert(1)
-                    bird3_1.revert(1)
-                    bird4_1.revert(1)
-                    released_1 = False
-                elif bird3_1.is_clicked():
-                    top_bird_1 = bird3_1
-                    top_bird_2 = None
-                    bird3_1.update(1)
-                    bird3_1.rect.x = 0.26*1280
-                    bird3_1.rect.y = 515
-                    bird1_1.revert(1)
-                    bird2_1.revert(1)
-                    bird4_1.revert(1)
-                    released_1 = False
-                elif bird4_1.is_clicked():
-                    top_bird_1 = bird4_1
-                    top_bird_2 = None
-                    bird4_1.update(1)
-                    bird4_1.rect.x = 0.26*1280
-                    bird4_1.rect.y = 515
-                    bird1_1.revert(1)
-                    bird2_1.revert(1)
-                    bird3_1.revert(1)
-                    released_1 = False
-                elif bird1_2.is_clicked():
-                    top_bird_2 = bird1_2
-                    top_bird_1 = None
-                    bird1_2.update(2)
-                    bird1_2.rect.x = 0.76*1280
-                    bird1_2.rect.y = 515
-                    bird2_2.revert(2)
-                    bird3_2.revert(2)
-                    bird4_2.revert(2)
-                    released_2 = False
-                elif bird2_2.is_clicked():
-                    top_bird_2 = bird2_2
-                    top_bird_1 = None
-                    bird2_2.update(2)
-                    bird2_2.rect.x = 0.76*1280
-                    bird2_2.rect.y = 515
-                    bird1_2.revert(2)
-                    bird3_2.revert(2)
-                    bird4_2.revert(2)
-                    released_2 = False
-                elif bird3_2.is_clicked():
-                    top_bird_2 = bird3_2
-                    top_bird_1 = None
-                    bird3_2.update(2)
-                    bird3_2.rect.x = 0.76*1280
-                    bird3_2.rect.y = 515
-                    bird1_2.revert(2)
-                    bird2_2.revert(2)
-                    bird4_2.revert(2)
-                    released_2 = False
-                elif bird4_2.is_clicked():
-                    top_bird_2 = bird4_2
-                    top_bird_1 = None
-                    bird4_2.update(2)
-                    bird4_2.rect.x = 0.76*1280
-                    bird4_2.rect.y = 515
-                    bird1_2.revert(2)
-                    bird2_2.revert(2)
-                    bird3_2.revert(2)
-                    released_2 = False
+                if turn == "player1":
+                    if bird1_1.is_clicked():
+                        top_bird_1 = bird1_1
+                        top_bird_2 = None
+                        bird1_1.update(1)
+                        bird1_1.rect.x = 0.26*1280
+                        bird1_1.rect.y = 515
+                        bird2_1.revert(1)
+                        bird3_1.revert(1)
+                        bird4_1.revert(1)
+                        released_1 = False
+                    elif bird2_1.is_clicked():
+                        top_bird_1 = bird2_1
+                        top_bird_2 = None
+                        bird2_1.update(1)
+                        bird2_1.rect.x = 0.26*1280
+                        bird2_1.rect.y = 515
+                        bird1_1.revert(1)
+                        bird3_1.revert(1)
+                        bird4_1.revert(1)
+                        released_1 = False
+                    elif bird3_1.is_clicked():
+                        top_bird_1 = bird3_1
+                        top_bird_2 = None
+                        bird3_1.update(1)
+                        bird3_1.rect.x = 0.26*1280
+                        bird3_1.rect.y = 515
+                        bird1_1.revert(1)
+                        bird2_1.revert(1)
+                        bird4_1.revert(1)
+                        released_1 = False
+                    elif bird4_1.is_clicked():
+                        top_bird_1 = bird4_1
+                        top_bird_2 = None
+                        bird4_1.update(1)
+                        bird4_1.rect.x = 0.26*1280
+                        bird4_1.rect.y = 515
+                        bird1_1.revert(1)
+                        bird2_1.revert(1)
+                        bird3_1.revert(1)
+                        released_1 = False
+                if turn == "player2":
+                    if bird1_2.is_clicked():
+                        top_bird_2 = bird1_2
+                        top_bird_1 = None
+                        bird1_2.update(2)
+                        bird1_2.rect.x = 0.76*1280
+                        bird1_2.rect.y = 515
+                        bird2_2.revert(2)
+                        bird3_2.revert(2)
+                        bird4_2.revert(2)
+                        released_2 = False
+                    elif bird2_2.is_clicked():
+                        top_bird_2 = bird2_2
+                        top_bird_1 = None
+                        bird2_2.update(2)
+                        bird2_2.rect.x = 0.76*1280
+                        bird2_2.rect.y = 515
+                        bird1_2.revert(2)
+                        bird3_2.revert(2)
+                        bird4_2.revert(2)
+                        released_2 = False
+                    elif bird3_2.is_clicked():
+                        top_bird_2 = bird3_2
+                        top_bird_1 = None
+                        bird3_2.update(2)
+                        bird3_2.rect.x = 0.76*1280
+                        bird3_2.rect.y = 515
+                        bird1_2.revert(2)
+                        bird2_2.revert(2)
+                        bird4_2.revert(2)
+                        released_2 = False
+                    elif bird4_2.is_clicked():
+                        top_bird_2 = bird4_2
+                        top_bird_1 = None
+                        bird4_2.update(2)
+                        bird4_2.rect.x = 0.76*1280
+                        bird4_2.rect.y = 515
+                        bird1_2.revert(2)
+                        bird2_2.revert(2)
+                        bird3_2.revert(2)
+                        released_2 = False
                 if top_bird_1 and top_bird_1.rect.collidepoint(event.pos):
                     dragging_1 = True
                 if top_bird_2 and top_bird_2.rect.collidepoint(event.pos):
                     dragging_2 = True
             if event.type == pygame.MOUSEBUTTONUP:
-                if top_bird_1:
-                    if top_bird_1.rect.collidepoint(event.pos):
-                        dragging_1 = False
-                        released_1 = True
-                        if top_bird_1:
-                            top_bird_1.velocityX = -k*(event.pos[0] - 0.26*x_length)
-                            top_bird_1.velocityY = -k*(event.pos[1] - 515)
-                if top_bird_2:
-                    if top_bird_2.rect.collidepoint(event.pos):
-                        dragging_2 = False
-                        released_2 = True
-                        if top_bird_2:
-                            top_bird_2.velocityX = -k*(event.pos[0] - 0.76*x_length)
-                            top_bird_2.velocityY = -k*(event.pos[1] - 515)
+                if top_bird_1 and dragging_1:
+                    dragging_1 = False
+                    released_1 = True
+                    top_bird_1.velocityX = -k*(event.pos[0] - 0.26*x_length)
+                    top_bird_1.velocityY = -k*(event.pos[1] - 515)
+                    turn = "player2"
+                if top_bird_2 and dragging_2:
+                    dragging_2 = False
+                    released_2 = True
+                    top_bird_2.velocityX = -k*(event.pos[0] - 0.76*x_length)
+                    top_bird_2.velocityY = -k*(event.pos[1] - 515)
+                    turn = "player1"
+
                 
 
             if event.type == pygame.MOUSEMOTION:
@@ -203,7 +205,7 @@ while running:
                         top_bird_2.rect.center = event.pos
                         top_bird_2.x, top_bird_2.y = top_bird_2.rect.topleft
                     else:
-                        top_bird_1.rect.center = (catapult_center[0] + normalized_x*MAX_drag, catapult_center[1] + normalized_y*MAX_drag)
+                        top_bird_2.rect.center = (catapult_center[0] + normalized_x*MAX_drag, catapult_center[1] + normalized_y*MAX_drag)
                         top_bird_2.x, top_bird_2.y = top_bird_2.rect.topleft
 
         if top_bird_1 and released_1:
